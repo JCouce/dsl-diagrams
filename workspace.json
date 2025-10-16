@@ -1,0 +1,878 @@
+{
+  "configuration" : { },
+  "description" : "Versión inicial C1–C3 (contexto, contenedores, componentes)",
+  "documentation" : { },
+  "id" : 1,
+  "lastModifiedAgent" : "structurizr-ui",
+  "lastModifiedDate" : "2025-10-16T10:32:54Z",
+  "model" : {
+    "people" : [ {
+      "description" : "Revisa y valida flags; aporta feedback para mejorar reglas y glosarios.",
+      "id" : "1",
+      "location" : "Unspecified",
+      "name" : "Analista HITL",
+      "properties" : {
+        "structurizr.dsl.identifier" : "analista"
+      },
+      "relationships" : [ {
+        "description" : "Revisa y decide sobre tickets",
+        "destinationId" : "19",
+        "id" : "50",
+        "sourceId" : "1",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Revisa y decide sobre tickets",
+        "destinationId" : "6",
+        "id" : "51",
+        "linkedRelationshipId" : "50",
+        "sourceId" : "1",
+        "technology" : "HTTPS"
+      } ],
+      "tags" : "Element,Person,A"
+    }, {
+      "description" : "Define políticas, umbrales y aprueba cambios estructurales de reglas/modelos.",
+      "id" : "2",
+      "location" : "Unspecified",
+      "name" : "Comité de Gobernanza",
+      "properties" : {
+        "structurizr.dsl.identifier" : "comite"
+      },
+      "relationships" : [ {
+        "description" : "Aprueba cambios de reglas/modelos",
+        "destinationId" : "19",
+        "id" : "52",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Aprueba cambios de reglas/modelos",
+        "destinationId" : "6",
+        "id" : "53",
+        "linkedRelationshipId" : "52",
+        "sourceId" : "2",
+        "technology" : "HTTPS"
+      } ],
+      "tags" : "Element,Person,A"
+    }, {
+      "description" : "Consulta flags históricos, trazabilidad y evidencias para auditoría.",
+      "id" : "3",
+      "location" : "Unspecified",
+      "name" : "Auditor Externo",
+      "properties" : {
+        "structurizr.dsl.identifier" : "auditor"
+      },
+      "relationships" : [ {
+        "description" : "Consulta resultados y auditoría",
+        "destinationId" : "20",
+        "id" : "54",
+        "sourceId" : "3",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Consulta resultados y auditoría",
+        "destinationId" : "6",
+        "id" : "55",
+        "linkedRelationshipId" : "54",
+        "sourceId" : "3",
+        "technology" : "HTTPS"
+      } ],
+      "tags" : "Element,Person,A"
+    } ],
+    "softwareSystems" : [ {
+      "description" : "Fuente de filings (8-K, 10-Q, 10-K, 6-K).",
+      "documentation" : { },
+      "id" : "4",
+      "location" : "Unspecified",
+      "name" : "SEC/EDGAR",
+      "properties" : {
+        "structurizr.dsl.identifier" : "sec"
+      },
+      "relationships" : [ {
+        "description" : "Publica filings (feed / fetch incremental)",
+        "destinationId" : "7",
+        "id" : "26",
+        "sourceId" : "4",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Publica filings (feed / fetch incremental)",
+        "destinationId" : "6",
+        "id" : "27",
+        "linkedRelationshipId" : "26",
+        "sourceId" : "4",
+        "technology" : "HTTPS"
+      } ],
+      "tags" : "Element,Software System,Ext"
+    }, {
+      "description" : "Consume flags, scores y explicaciones para flujos de negocio.",
+      "documentation" : { },
+      "id" : "5",
+      "location" : "Unspecified",
+      "name" : "CRM / Portal Interno",
+      "properties" : {
+        "structurizr.dsl.identifier" : "crm"
+      },
+      "relationships" : [ {
+        "description" : "Consume flags, scores, explicaciones",
+        "destinationId" : "20",
+        "id" : "48",
+        "sourceId" : "5",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Consume flags, scores, explicaciones",
+        "destinationId" : "6",
+        "id" : "49",
+        "linkedRelationshipId" : "48",
+        "sourceId" : "5",
+        "technology" : "HTTPS"
+      } ],
+      "tags" : "Element,Software System,Ext"
+    }, {
+      "containers" : [ {
+        "description" : "Captura filings por feed y fetch incremental (CIK/fecha).",
+        "documentation" : { },
+        "id" : "7",
+        "name" : "Ingesta",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ingesta"
+        },
+        "relationships" : [ {
+          "description" : "Publica eventos de nuevo filing",
+          "destinationId" : "25",
+          "id" : "28",
+          "sourceId" : "7",
+          "tags" : "Relationship",
+          "technology" : "evento:new_filing"
+        }, {
+          "description" : "Escribe originales y metadatos",
+          "destinationId" : "22",
+          "id" : "29",
+          "sourceId" : "7",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container,S",
+        "technology" : "Servicio"
+      }, {
+        "description" : "Convierte HTML/PDF a texto estructurado; OCR si no hay texto embebido.",
+        "documentation" : { },
+        "id" : "8",
+        "name" : "Parsing / OCR",
+        "properties" : {
+          "structurizr.dsl.identifier" : "parsing"
+        },
+        "relationships" : [ {
+          "description" : "Lee originales",
+          "destinationId" : "22",
+          "id" : "30",
+          "sourceId" : "8",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Entrega texto estructurado / tablas",
+          "destinationId" : "9",
+          "id" : "31",
+          "sourceId" : "8",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container,S",
+        "technology" : "Servicio"
+      }, {
+        "description" : "Limpieza, canonicalización, separación por secciones y extracción de tablas.",
+        "documentation" : { },
+        "id" : "9",
+        "name" : "Normalización",
+        "properties" : {
+          "structurizr.dsl.identifier" : "normalizacion"
+        },
+        "relationships" : [ {
+          "description" : "Guarda textos limpios y secciones",
+          "destinationId" : "22",
+          "id" : "32",
+          "sourceId" : "9",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Envía secciones y entidades normalizadas",
+          "destinationId" : "10",
+          "id" : "33",
+          "sourceId" : "9",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Entrega features/slots por sección",
+          "destinationId" : "14",
+          "id" : "56",
+          "sourceId" : "9",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container,S",
+        "technology" : "Servicio"
+      }, {
+        "components" : [ {
+          "description" : "Diccionarios, expresiones y reglas por sección; extracción de evidencias fuertes.",
+          "documentation" : { },
+          "id" : "11",
+          "name" : "Capa determinista",
+          "properties" : {
+            "structurizr.dsl.identifier" : "capa_det"
+          },
+          "relationships" : [ {
+            "description" : "Propone evidencias/flags",
+            "destinationId" : "13",
+            "id" : "59",
+            "sourceId" : "11",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component,S",
+          "technology" : "Lógica"
+        }, {
+          "description" : "Clasificadores/LLM para señales débiles y lenguaje ofuscado.",
+          "documentation" : { },
+          "id" : "12",
+          "name" : "Capa ML / LLM",
+          "properties" : {
+            "structurizr.dsl.identifier" : "capa_ml"
+          },
+          "relationships" : [ {
+            "description" : "Propone evidencias/flags con score",
+            "destinationId" : "13",
+            "id" : "60",
+            "sourceId" : "12",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Lee/Escribe artefactos de entrenamiento",
+            "destinationId" : "22",
+            "id" : "63",
+            "sourceId" : "12",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component,S",
+          "technology" : "Modelo"
+        }, {
+          "description" : "Prioriza capas; aplica políticas de abstención y umbrales.",
+          "documentation" : { },
+          "id" : "13",
+          "name" : "Resolutor de conflictos",
+          "properties" : {
+            "structurizr.dsl.identifier" : "resolutor"
+          },
+          "relationships" : [ {
+            "description" : "Entrega evidencias consolidadas",
+            "destinationId" : "17",
+            "id" : "61",
+            "sourceId" : "13",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component,S",
+          "technology" : "Lógica"
+        }, {
+          "description" : "Interpreta reglas versionadas (YAML/JSON); operadores: umbrales, match semántico, conteo de evidencias, antigüedad.",
+          "documentation" : { },
+          "id" : "14",
+          "name" : "Evaluador de reglas (DSL)",
+          "properties" : {
+            "structurizr.dsl.identifier" : "dsl"
+          },
+          "relationships" : [ {
+            "description" : "Evalúa reglas deterministas",
+            "destinationId" : "11",
+            "id" : "57",
+            "sourceId" : "14",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Invoca modelos para señales débiles",
+            "destinationId" : "12",
+            "id" : "58",
+            "sourceId" : "14",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Consulta similitud / contexto",
+            "destinationId" : "24",
+            "id" : "62",
+            "sourceId" : "14",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component,S",
+          "technology" : "Lógica"
+        }, {
+          "description" : "Mide precisión/recall por flag y sector; recalibra umbrales periódicamente.",
+          "documentation" : { },
+          "id" : "15",
+          "name" : "Calibrador / conjunto oro",
+          "properties" : {
+            "structurizr.dsl.identifier" : "calibrador"
+          },
+          "relationships" : [ {
+            "description" : "Registra métricas de validación",
+            "destinationId" : "23",
+            "id" : "64",
+            "sourceId" : "15",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component,S",
+          "technology" : "Proceso"
+        }, {
+          "description" : "Crea tickets para baja confianza, contradicciones o novedad lingüística.",
+          "documentation" : { },
+          "id" : "16",
+          "name" : "Gestor de tickets automáticos",
+          "properties" : {
+            "structurizr.dsl.identifier" : "gestor_tickets"
+          },
+          "relationships" : [ {
+            "description" : "Emite ticket con contexto y severidad",
+            "destinationId" : "18",
+            "id" : "65",
+            "sourceId" : "16",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component,S",
+          "technology" : "Orquestación"
+        } ],
+        "description" : "Extracción híbrida (reglas deterministas + ML/LLM) y resolución de conflictos.",
+        "documentation" : { },
+        "id" : "10",
+        "name" : "Motor de Extracción",
+        "properties" : {
+          "structurizr.dsl.identifier" : "motor",
+          "version" : "v1.0"
+        },
+        "relationships" : [ {
+          "description" : "Consulta/actualiza embeddings",
+          "destinationId" : "24",
+          "id" : "34",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Escribe flags preliminares / evidencias",
+          "destinationId" : "23",
+          "id" : "35",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Guarda artefactos intermedios (features/snippets)",
+          "destinationId" : "22",
+          "id" : "36",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Entrega señales y contexto para scoring",
+          "destinationId" : "17",
+          "id" : "37",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Emite ticket con contexto y severidad",
+          "destinationId" : "18",
+          "id" : "66",
+          "linkedRelationshipId" : "65",
+          "sourceId" : "10"
+        } ],
+        "tags" : "Element,Container,S",
+        "technology" : "Servicio"
+      }, {
+        "description" : "Calcula score de confianza por flag y genera explicación mínima (snippets + localización).",
+        "documentation" : { },
+        "id" : "17",
+        "name" : "Scoring & Explicaciones",
+        "properties" : {
+          "structurizr.dsl.identifier" : "scoring"
+        },
+        "relationships" : [ {
+          "description" : "Escribe score y explicación",
+          "destinationId" : "23",
+          "id" : "38",
+          "sourceId" : "17",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Dispara ticket si baja confianza/contradicción/novedad",
+          "destinationId" : "18",
+          "id" : "39",
+          "sourceId" : "17",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container,S",
+        "technology" : "Servicio"
+      }, {
+        "description" : "Crea y gestiona tickets automáticos; integra revisión humana y feedback-loop.",
+        "documentation" : { },
+        "id" : "18",
+        "name" : "Ticketing / HITL",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ticketing"
+        },
+        "relationships" : [ {
+          "description" : "Actualiza estado de ticket",
+          "destinationId" : "23",
+          "id" : "40",
+          "sourceId" : "18",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Feedback para ajuste de reglas/glosario (vía cola)",
+          "destinationId" : "10",
+          "id" : "43",
+          "sourceId" : "18",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Eventos de calidad / métricas",
+          "destinationId" : "21",
+          "id" : "44",
+          "sourceId" : "18",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container,S",
+        "technology" : "Servicio"
+      }, {
+        "description" : "Consola web para revisión, búsqueda, filtros y acciones (confirmar/descartar/abstener/ajustar regla).",
+        "documentation" : { },
+        "id" : "19",
+        "name" : "Backoffice",
+        "properties" : {
+          "structurizr.dsl.identifier" : "backoffice"
+        },
+        "relationships" : [ {
+          "description" : "Gestiona tickets y decisiones (HITL)",
+          "destinationId" : "18",
+          "id" : "41",
+          "sourceId" : "19",
+          "tags" : "Relationship",
+          "technology" : "HTTPS"
+        }, {
+          "description" : "Consulta histórico, evidencias y trazabilidad",
+          "destinationId" : "23",
+          "id" : "42",
+          "sourceId" : "19",
+          "tags" : "Relationship",
+          "technology" : "SQL/HTTPS"
+        } ],
+        "tags" : "Element,Container,A UI",
+        "technology" : "Web UI"
+      }, {
+        "description" : "Expone flags, scores, explicaciones y export (CSV/Parquet); webhooks para integraciones.",
+        "documentation" : { },
+        "id" : "20",
+        "name" : "API de Consulta / Export",
+        "properties" : {
+          "structurizr.dsl.identifier" : "api"
+        },
+        "relationships" : [ {
+          "description" : "Lee resultados consolidados",
+          "destinationId" : "23",
+          "id" : "46",
+          "sourceId" : "20",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Export a CSV/Parquet",
+          "destinationId" : "22",
+          "id" : "47",
+          "sourceId" : "20",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container,S",
+        "technology" : "Servicio"
+      }, {
+        "description" : "Métricas, alarmas, muestreo ciego, detector de drift lingüístico.",
+        "documentation" : { },
+        "id" : "21",
+        "name" : "Observabilidad",
+        "properties" : {
+          "structurizr.dsl.identifier" : "observabilidad"
+        },
+        "relationships" : [ {
+          "description" : "Guarda métricas y auditoría",
+          "destinationId" : "23",
+          "id" : "45",
+          "sourceId" : "21",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container,S",
+        "technology" : "Servicio"
+      }, {
+        "description" : "Almacén bruto de originales, textos, tablas y metadatos.",
+        "documentation" : { },
+        "id" : "22",
+        "name" : "Data Lake",
+        "properties" : {
+          "structurizr.dsl.identifier" : "datalake"
+        },
+        "tags" : "Element,Container,Data",
+        "technology" : "Storage"
+      }, {
+        "description" : "Estados de flags, histórico, tickets, métricas y trazabilidad.",
+        "documentation" : { },
+        "id" : "23",
+        "name" : "Base Relacional",
+        "properties" : {
+          "structurizr.dsl.identifier" : "bdr"
+        },
+        "tags" : "Element,Container,Data",
+        "technology" : "Database"
+      }, {
+        "description" : "Embeddings y búsqueda semántica (recall).",
+        "documentation" : { },
+        "id" : "24",
+        "name" : "Índice Vectorial",
+        "properties" : {
+          "structurizr.dsl.identifier" : "vector"
+        },
+        "tags" : "Element,Container,Data",
+        "technology" : "Database"
+      }, {
+        "description" : "Desacopla etapas; gestiona eventos, reintentos idempotentes y cuarentenas.",
+        "documentation" : { },
+        "id" : "25",
+        "name" : "Event Bus / Cola",
+        "properties" : {
+          "structurizr.dsl.identifier" : "cola"
+        },
+        "tags" : "Element,Container,Infra",
+        "technology" : "Message Broker"
+      } ],
+      "description" : "Pipeline para ingestión, análisis, extracción de señales (flags), scoring, ticketing HITL y gobierno del conocimiento.",
+      "documentation" : { },
+      "id" : "6",
+      "location" : "Unspecified",
+      "name" : "Sistema de Flags sobre Filings",
+      "properties" : {
+        "structurizr.dsl.identifier" : "sistema",
+        "version" : "v1.0"
+      },
+      "tags" : "Element,Software System,Core"
+    } ]
+  },
+  "name" : "Sistema de Flags sobre Filings",
+  "properties" : {
+    "structurizr.dsl" : "d29ya3NwYWNlICJTaXN0ZW1hIGRlIEZsYWdzIHNvYnJlIEZpbGluZ3MiICJWZXJzacOzbiBpbmljaWFsIEMx4oCTQzMgKGNvbnRleHRvLCBjb250ZW5lZG9yZXMsIGNvbXBvbmVudGVzKSIgewoKICBtb2RlbCB7CiAgICAKICAgIC8qKioqKioqKioqKioqKioqKioqKgogICAgICogUEVSU09OQVMgLyBBQ1RPUkVTCiAgICAgKioqKioqKioqKioqKioqKioqKiovCiAgICBhbmFsaXN0YSA9IHBlcnNvbiAiQW5hbGlzdGEgSElUTCIgIlJldmlzYSB5IHZhbGlkYSBmbGFnczsgYXBvcnRhIGZlZWRiYWNrIHBhcmEgbWVqb3JhciByZWdsYXMgeSBnbG9zYXJpb3MuIiB7CiAgICAgIHRhZ3MgIkEiCiAgICB9CgogICAgY29taXRlID0gcGVyc29uICJDb21pdMOpIGRlIEdvYmVybmFuemEiICJEZWZpbmUgcG9sw610aWNhcywgdW1icmFsZXMgeSBhcHJ1ZWJhIGNhbWJpb3MgZXN0cnVjdHVyYWxlcyBkZSByZWdsYXMvbW9kZWxvcy4iIHsKICAgICAgdGFncyAiQSIKICAgIH0KCiAgICBhdWRpdG9yID0gcGVyc29uICJBdWRpdG9yIEV4dGVybm8iICJDb25zdWx0YSBmbGFncyBoaXN0w7NyaWNvcywgdHJhemFiaWxpZGFkIHkgZXZpZGVuY2lhcyBwYXJhIGF1ZGl0b3LDrWEuIiB7CiAgICAgIHRhZ3MgIkEiCiAgICB9CgogICAgLyoqKioqKioqKioqKioqKioqKioqKioqKgogICAgICogU0lTVEVNQVMgRVhURVJOT1MgKEVYVCkKICAgICAqKioqKioqKioqKioqKioqKioqKioqKiovCiAgICBzZWMgPSBzb2Z0d2FyZVN5c3RlbSAiU0VDL0VER0FSIiAiRnVlbnRlIGRlIGZpbGluZ3MgKDgtSywgMTAtUSwgMTAtSywgNi1LKS4iIHsKICAgICAgdGFncyAiRXh0IgogICAgfQoKICAgIGNybSA9IHNvZnR3YXJlU3lzdGVtICJDUk0gLyBQb3J0YWwgSW50ZXJubyIgIkNvbnN1bWUgZmxhZ3MsIHNjb3JlcyB5IGV4cGxpY2FjaW9uZXMgcGFyYSBmbHVqb3MgZGUgbmVnb2Npby4iIHsKICAgICAgdGFncyAiRXh0IgogICAgfQoKICAgIC8qKioqKioqKioqKioqKioqKioqKioqKioqKioqKioKICAgICAqIFNJU1RFTUEgUFJJTkNJUEFMIChDT1JFL0M0KQogICAgICoqKioqKioqKioqKioqKioqKioqKioqKioqKioqKi8KICAgIHNpc3RlbWEgPSBzb2Z0d2FyZVN5c3RlbSAiU2lzdGVtYSBkZSBGbGFncyBzb2JyZSBGaWxpbmdzIiAiUGlwZWxpbmUgcGFyYSBpbmdlc3Rpw7NuLCBhbsOhbGlzaXMsIGV4dHJhY2Npw7NuIGRlIHNlw7FhbGVzIChmbGFncyksIHNjb3JpbmcsIHRpY2tldGluZyBISVRMIHkgZ29iaWVybm8gZGVsIGNvbm9jaW1pZW50by4iIHsKICAgICAgdGFncyAiQ29yZSIKICAgICAgcHJvcGVydGllcyB7CiAgICAgICAgdmVyc2lvbiAidjEuMCIKICAgICAgfQoKICAgICAgLyoqKioqKioqKioqKioqKioqKioqKioqKgogICAgICAgKiBDT05URU5FRE9SRVMgKEMyKQogICAgICAgKioqKioqKioqKioqKioqKioqKioqKioqLwogICAgICBpbmdlc3RhID0gY29udGFpbmVyICJJbmdlc3RhIiAiQ2FwdHVyYSBmaWxpbmdzIHBvciBmZWVkIHkgZmV0Y2ggaW5jcmVtZW50YWwgKENJSy9mZWNoYSkuIiAiU2VydmljaW8iIHsKICAgICAgICB0YWdzICJTIgogICAgICB9CgogICAgICBwYXJzaW5nID0gY29udGFpbmVyICJQYXJzaW5nIC8gT0NSIiAiQ29udmllcnRlIEhUTUwvUERGIGEgdGV4dG8gZXN0cnVjdHVyYWRvOyBPQ1Igc2kgbm8gaGF5IHRleHRvIGVtYmViaWRvLiIgIlNlcnZpY2lvIiB7CiAgICAgICAgdGFncyAiUyIKICAgICAgfQoKICAgICAgbm9ybWFsaXphY2lvbiA9IGNvbnRhaW5lciAiTm9ybWFsaXphY2nDs24iICJMaW1waWV6YSwgY2Fub25pY2FsaXphY2nDs24sIHNlcGFyYWNpw7NuIHBvciBzZWNjaW9uZXMgeSBleHRyYWNjacOzbiBkZSB0YWJsYXMuIiAiU2VydmljaW8iIHsKICAgICAgICB0YWdzICJTIgogICAgICB9CgogICAgICBtb3RvciA9IGNvbnRhaW5lciAiTW90b3IgZGUgRXh0cmFjY2nDs24iICJFeHRyYWNjacOzbiBow61icmlkYSAocmVnbGFzIGRldGVybWluaXN0YXMgKyBNTC9MTE0pIHkgcmVzb2x1Y2nDs24gZGUgY29uZmxpY3Rvcy4iICJTZXJ2aWNpbyIgewogICAgICAgIHRhZ3MgIlMiCiAgICAgICAgcHJvcGVydGllcyB7CiAgICAgICAgICB2ZXJzaW9uICJ2MS4wIgogICAgICAgIH0KCiAgICAgICAgLyoqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKgogICAgICAgICAqIENPTVBPTkVOVEVTIChDMykg4oCTIE1vdG9yIGRlIEV4dHJhY2Npw7NuCiAgICAgICAgICoqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKi8KICAgICAgICBjYXBhX2RldCA9IGNvbXBvbmVudCAiQ2FwYSBkZXRlcm1pbmlzdGEiICJEaWNjaW9uYXJpb3MsIGV4cHJlc2lvbmVzIHkgcmVnbGFzIHBvciBzZWNjacOzbjsgZXh0cmFjY2nDs24gZGUgZXZpZGVuY2lhcyBmdWVydGVzLiIgIkzDs2dpY2EiIHsKICAgICAgICAgIHRhZ3MgIlMiCiAgICAgICAgfQoKICAgICAgICBjYXBhX21sID0gY29tcG9uZW50ICJDYXBhIE1MIC8gTExNIiAiQ2xhc2lmaWNhZG9yZXMvTExNIHBhcmEgc2XDsWFsZXMgZMOpYmlsZXMgeSBsZW5ndWFqZSBvZnVzY2Fkby4iICJNb2RlbG8iIHsKICAgICAgICAgIHRhZ3MgIlMiCiAgICAgICAgfQoKICAgICAgICByZXNvbHV0b3IgPSBjb21wb25lbnQgIlJlc29sdXRvciBkZSBjb25mbGljdG9zIiAiUHJpb3JpemEgY2FwYXM7IGFwbGljYSBwb2zDrXRpY2FzIGRlIGFic3RlbmNpw7NuIHkgdW1icmFsZXMuIiAiTMOzZ2ljYSIgewogICAgICAgICAgdGFncyAiUyIKICAgICAgICB9CgogICAgICAgIGRzbCA9IGNvbXBvbmVudCAiRXZhbHVhZG9yIGRlIHJlZ2xhcyAoRFNMKSIgIkludGVycHJldGEgcmVnbGFzIHZlcnNpb25hZGFzIChZQU1ML0pTT04pOyBvcGVyYWRvcmVzOiB1bWJyYWxlcywgbWF0Y2ggc2Vtw6FudGljbywgY29udGVvIGRlIGV2aWRlbmNpYXMsIGFudGlnw7xlZGFkLiIgIkzDs2dpY2EiIHsKICAgICAgICAgIHRhZ3MgIlMiCiAgICAgICAgfQoKICAgICAgICBjYWxpYnJhZG9yID0gY29tcG9uZW50ICJDYWxpYnJhZG9yIC8gY29uanVudG8gb3JvIiAiTWlkZSBwcmVjaXNpw7NuL3JlY2FsbCBwb3IgZmxhZyB5IHNlY3RvcjsgcmVjYWxpYnJhIHVtYnJhbGVzIHBlcmnDs2RpY2FtZW50ZS4iICJQcm9jZXNvIiB7CiAgICAgICAgICB0YWdzICJTIgogICAgICAgIH0KCiAgICAgICAgZ2VzdG9yX3RpY2tldHMgPSBjb21wb25lbnQgIkdlc3RvciBkZSB0aWNrZXRzIGF1dG9tw6F0aWNvcyIgIkNyZWEgdGlja2V0cyBwYXJhIGJhamEgY29uZmlhbnphLCBjb250cmFkaWNjaW9uZXMgbyBub3ZlZGFkIGxpbmfDvMOtc3RpY2EuIiAiT3JxdWVzdGFjacOzbiIgewogICAgICAgICAgdGFncyAiUyIKICAgICAgICB9CiAgICAgIH0KCiAgICAgIHNjb3JpbmcgPSBjb250YWluZXIgIlNjb3JpbmcgJiBFeHBsaWNhY2lvbmVzIiAiQ2FsY3VsYSBzY29yZSBkZSBjb25maWFuemEgcG9yIGZsYWcgeSBnZW5lcmEgZXhwbGljYWNpw7NuIG3DrW5pbWEgKHNuaXBwZXRzICsgbG9jYWxpemFjacOzbikuIiAiU2VydmljaW8iIHsKICAgICAgICB0YWdzICJTIgogICAgICB9CgogICAgICB0aWNrZXRpbmcgPSBjb250YWluZXIgIlRpY2tldGluZyAvIEhJVEwiICJDcmVhIHkgZ2VzdGlvbmEgdGlja2V0cyBhdXRvbcOhdGljb3M7IGludGVncmEgcmV2aXNpw7NuIGh1bWFuYSB5IGZlZWRiYWNrLWxvb3AuIiAiU2VydmljaW8iIHsKICAgICAgICB0YWdzICJTIgogICAgICB9CgogICAgICBiYWNrb2ZmaWNlID0gY29udGFpbmVyICJCYWNrb2ZmaWNlIiAiQ29uc29sYSB3ZWIgcGFyYSByZXZpc2nDs24sIGLDunNxdWVkYSwgZmlsdHJvcyB5IGFjY2lvbmVzIChjb25maXJtYXIvZGVzY2FydGFyL2Fic3RlbmVyL2FqdXN0YXIgcmVnbGEpLiIgIldlYiBVSSIgewogICAgICAgIHRhZ3MgIkEgVUkiCiAgICAgIH0KCiAgICAgIGFwaSA9IGNvbnRhaW5lciAiQVBJIGRlIENvbnN1bHRhIC8gRXhwb3J0IiAiRXhwb25lIGZsYWdzLCBzY29yZXMsIGV4cGxpY2FjaW9uZXMgeSBleHBvcnQgKENTVi9QYXJxdWV0KTsgd2ViaG9va3MgcGFyYSBpbnRlZ3JhY2lvbmVzLiIgIlNlcnZpY2lvIiB7CiAgICAgICAgdGFncyAiUyIKICAgICAgfQoKICAgICAgb2JzZXJ2YWJpbGlkYWQgPSBjb250YWluZXIgIk9ic2VydmFiaWxpZGFkIiAiTcOpdHJpY2FzLCBhbGFybWFzLCBtdWVzdHJlbyBjaWVnbywgZGV0ZWN0b3IgZGUgZHJpZnQgbGluZ8O8w61zdGljby4iICJTZXJ2aWNpbyIgewogICAgICAgIHRhZ3MgIlMiCiAgICAgIH0KCiAgICAgIGRhdGFsYWtlID0gY29udGFpbmVyICJEYXRhIExha2UiICJBbG1hY8OpbiBicnV0byBkZSBvcmlnaW5hbGVzLCB0ZXh0b3MsIHRhYmxhcyB5IG1ldGFkYXRvcy4iICJTdG9yYWdlIiB7CiAgICAgICAgdGFncyAiRGF0YSIKICAgICAgfQoKICAgICAgYmRyID0gY29udGFpbmVyICJCYXNlIFJlbGFjaW9uYWwiICJFc3RhZG9zIGRlIGZsYWdzLCBoaXN0w7NyaWNvLCB0aWNrZXRzLCBtw6l0cmljYXMgeSB0cmF6YWJpbGlkYWQuIiAiRGF0YWJhc2UiIHsKICAgICAgICB0YWdzICJEYXRhIgogICAgICB9CgogICAgICB2ZWN0b3IgPSBjb250YWluZXIgIsONbmRpY2UgVmVjdG9yaWFsIiAiRW1iZWRkaW5ncyB5IGLDunNxdWVkYSBzZW3DoW50aWNhIChyZWNhbGwpLiIgIkRhdGFiYXNlIiB7CiAgICAgICAgdGFncyAiRGF0YSIKICAgICAgfQoKICAgICAgY29sYSA9IGNvbnRhaW5lciAiRXZlbnQgQnVzIC8gQ29sYSIgIkRlc2Fjb3BsYSBldGFwYXM7IGdlc3Rpb25hIGV2ZW50b3MsIHJlaW50ZW50b3MgaWRlbXBvdGVudGVzIHkgY3VhcmVudGVuYXMuIiAiTWVzc2FnZSBCcm9rZXIiIHsKICAgICAgICB0YWdzICJJbmZyYSIKICAgICAgfQogICAgfQoKICAgIC8qKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioKICAgICAqIFJFTEFDSU9ORVMgKEMxL0MyKQogICAgICoqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKi8KICAgIHNlYyAtPiBpbmdlc3RhICJQdWJsaWNhIGZpbGluZ3MgKGZlZWQgLyBmZXRjaCBpbmNyZW1lbnRhbCkiICJIVFRQUyIKICAgIGluZ2VzdGEgLT4gY29sYSAiUHVibGljYSBldmVudG9zIGRlIG51ZXZvIGZpbGluZyIgImV2ZW50bzpuZXdfZmlsaW5nIgoKICAgIGluZ2VzdGEgLT4gZGF0YWxha2UgIkVzY3JpYmUgb3JpZ2luYWxlcyB5IG1ldGFkYXRvcyIKICAgIHBhcnNpbmcgLT4gZGF0YWxha2UgIkxlZSBvcmlnaW5hbGVzIiAKICAgIHBhcnNpbmcgLT4gbm9ybWFsaXphY2lvbiAiRW50cmVnYSB0ZXh0byBlc3RydWN0dXJhZG8gLyB0YWJsYXMiCiAgICBub3JtYWxpemFjaW9uIC0+IGRhdGFsYWtlICJHdWFyZGEgdGV4dG9zIGxpbXBpb3MgeSBzZWNjaW9uZXMiCgogICAgbm9ybWFsaXphY2lvbiAtPiBtb3RvciAiRW52w61hIHNlY2Npb25lcyB5IGVudGlkYWRlcyBub3JtYWxpemFkYXMiCiAgICBtb3RvciAtPiB2ZWN0b3IgIkNvbnN1bHRhL2FjdHVhbGl6YSBlbWJlZGRpbmdzIgogICAgbW90b3IgLT4gYmRyICJFc2NyaWJlIGZsYWdzIHByZWxpbWluYXJlcyAvIGV2aWRlbmNpYXMiCiAgICBtb3RvciAtPiBkYXRhbGFrZSAiR3VhcmRhIGFydGVmYWN0b3MgaW50ZXJtZWRpb3MgKGZlYXR1cmVzL3NuaXBwZXRzKSIKCiAgICBtb3RvciAtPiBzY29yaW5nICJFbnRyZWdhIHNlw7FhbGVzIHkgY29udGV4dG8gcGFyYSBzY29yaW5nIgogICAgc2NvcmluZyAtPiBiZHIgIkVzY3JpYmUgc2NvcmUgeSBleHBsaWNhY2nDs24iCgogICAgc2NvcmluZyAtPiB0aWNrZXRpbmcgIkRpc3BhcmEgdGlja2V0IHNpIGJhamEgY29uZmlhbnphL2NvbnRyYWRpY2Npw7NuL25vdmVkYWQiCiAgICB0aWNrZXRpbmcgLT4gYmRyICJBY3R1YWxpemEgZXN0YWRvIGRlIHRpY2tldCIKCiAgICBiYWNrb2ZmaWNlIC0+IHRpY2tldGluZyAiR2VzdGlvbmEgdGlja2V0cyB5IGRlY2lzaW9uZXMgKEhJVEwpIiAiSFRUUFMiCiAgICBiYWNrb2ZmaWNlIC0+IGJkciAiQ29uc3VsdGEgaGlzdMOzcmljbywgZXZpZGVuY2lhcyB5IHRyYXphYmlsaWRhZCIgIlNRTC9IVFRQUyIKCiAgICB0aWNrZXRpbmcgLT4gbW90b3IgIkZlZWRiYWNrIHBhcmEgYWp1c3RlIGRlIHJlZ2xhcy9nbG9zYXJpbyAodsOtYSBjb2xhKSIKICAgIHRpY2tldGluZyAtPiBvYnNlcnZhYmlsaWRhZCAiRXZlbnRvcyBkZSBjYWxpZGFkIC8gbcOpdHJpY2FzIgoKICAgIG9ic2VydmFiaWxpZGFkIC0+IGJkciAiR3VhcmRhIG3DqXRyaWNhcyB5IGF1ZGl0b3LDrWEiCgogICAgYXBpIC0+IGJkciAiTGVlIHJlc3VsdGFkb3MgY29uc29saWRhZG9zIgogICAgYXBpIC0+IGRhdGFsYWtlICJFeHBvcnQgYSBDU1YvUGFycXVldCIKCiAgICBjcm0gLT4gYXBpICJDb25zdW1lIGZsYWdzLCBzY29yZXMsIGV4cGxpY2FjaW9uZXMiICJIVFRQUyIKCiAgICBhbmFsaXN0YSAtPiBiYWNrb2ZmaWNlICJSZXZpc2EgeSBkZWNpZGUgc29icmUgdGlja2V0cyIgIkhUVFBTIgogICAgY29taXRlIC0+IGJhY2tvZmZpY2UgIkFwcnVlYmEgY2FtYmlvcyBkZSByZWdsYXMvbW9kZWxvcyIgIkhUVFBTIgogICAgYXVkaXRvciAtPiBhcGkgIkNvbnN1bHRhIHJlc3VsdGFkb3MgeSBhdWRpdG9yw61hIiAiSFRUUFMiCgogICAgLyoqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKgogICAgICogUkVMQUNJT05FUyAoQzMpCiAgICAgKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqLwogICAgbm9ybWFsaXphY2lvbiAtPiBkc2wgIkVudHJlZ2EgZmVhdHVyZXMvc2xvdHMgcG9yIHNlY2Npw7NuIgogICAgZHNsIC0+IGNhcGFfZGV0ICJFdmFsw7phIHJlZ2xhcyBkZXRlcm1pbmlzdGFzIgogICAgZHNsIC0+IGNhcGFfbWwgIkludm9jYSBtb2RlbG9zIHBhcmEgc2XDsWFsZXMgZMOpYmlsZXMiCgogICAgY2FwYV9kZXQgLT4gcmVzb2x1dG9yICJQcm9wb25lIGV2aWRlbmNpYXMvZmxhZ3MiCiAgICBjYXBhX21sIC0+IHJlc29sdXRvciAiUHJvcG9uZSBldmlkZW5jaWFzL2ZsYWdzIGNvbiBzY29yZSIKCiAgICByZXNvbHV0b3IgLT4gc2NvcmluZyAiRW50cmVnYSBldmlkZW5jaWFzIGNvbnNvbGlkYWRhcyIKCiAgICBkc2wgLT4gdmVjdG9yICJDb25zdWx0YSBzaW1pbGl0dWQgLyBjb250ZXh0byIKICAgIGNhcGFfbWwgLT4gZGF0YWxha2UgIkxlZS9Fc2NyaWJlIGFydGVmYWN0b3MgZGUgZW50cmVuYW1pZW50byIKICAgIGNhbGlicmFkb3IgLT4gYmRyICJSZWdpc3RyYSBtw6l0cmljYXMgZGUgdmFsaWRhY2nDs24iCiAgICBnZXN0b3JfdGlja2V0cyAtPiB0aWNrZXRpbmcgIkVtaXRlIHRpY2tldCBjb24gY29udGV4dG8geSBzZXZlcmlkYWQiCiAgfQoKICB2aWV3cyB7CgogICAgLyoqKioqKioqKioqKioqKioqKioKICAgICAqIEMxIOKAkyBDT05URVhUTwogICAgICoqKioqKioqKioqKioqKioqKiovCiAgICBzeXN0ZW1Db250ZXh0IHNpc3RlbWEgImMxLWNvbnRleHRvIiAiRGlhZ3JhbWEgZGUgY29udGV4dG8gZGVsIFNpc3RlbWEgZGUgRmxhZ3Mgc29icmUgRmlsaW5ncyIgewogICAgICBpbmNsdWRlICoKICAgICAgYXV0b0xheW91dCBscgogICAgfQoKICAgIC8qKioqKioqKioqKioqKioqKioqCiAgICAgKiBDMiDigJMgQ09OVEVORURPUkVTCiAgICAgKioqKioqKioqKioqKioqKioqKi8KICAgIGNvbnRhaW5lciBzaXN0ZW1hICJjMi1jb250ZW5lZG9yZXMiICJEaWFncmFtYSBkZSBjb250ZW5lZG9yZXMgZGVsIFNpc3RlbWEgZGUgRmxhZ3Mgc29icmUgRmlsaW5ncyIgewogICAgICBpbmNsdWRlICoKICAgICAgYXV0b0xheW91dCBscgogICAgfQoKICAgIC8qKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKgogICAgICogQzMg4oCTIENPTVBPTkVOVEVTIChNb3RvciBkZSBFeHRyYWNjacOzbikKICAgICAqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKi8KICAgIGNvbXBvbmVudCBtb3RvciAiYzMtbW90b3ItZXh0cmFjY2lvbiIgIkNvbXBvbmVudGVzIGludGVybm9zIGRlbCBtb3RvciBkZSBleHRyYWNjacOzbiB5IHJlbGFjaW9uZXMgY2xhdmUiIHsKICAgICAgaW5jbHVkZSAqCiAgICAgIGF1dG9MYXlvdXQgbHIKICAgIH0KICB9Cn0="
+  },
+  "views" : {
+    "componentViews" : [ {
+      "automaticLayout" : {
+        "applied" : true,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "containerId" : "10",
+      "description" : "Componentes internos del motor de extracción y relaciones clave",
+      "dimensions" : {
+        "height" : 4048,
+        "width" : 5350
+      },
+      "elements" : [ {
+        "id" : "9",
+        "x" : 200,
+        "y" : 405
+      }, {
+        "id" : "11",
+        "x" : 1700,
+        "y" : 1305
+      }, {
+        "id" : "12",
+        "x" : 1700,
+        "y" : 705
+      }, {
+        "id" : "13",
+        "x" : 2450,
+        "y" : 1305
+      }, {
+        "id" : "14",
+        "x" : 950,
+        "y" : 705
+      }, {
+        "id" : "15",
+        "x" : 950,
+        "y" : 1905
+      }, {
+        "id" : "16",
+        "x" : 950,
+        "y" : 1305
+      }, {
+        "id" : "17",
+        "x" : 3200,
+        "y" : 2414
+      }, {
+        "id" : "18",
+        "x" : 3950,
+        "y" : 3018
+      }, {
+        "id" : "22",
+        "x" : 2450,
+        "y" : 151
+      }, {
+        "id" : "23",
+        "x" : 4700,
+        "y" : 3018
+      }, {
+        "id" : "24",
+        "x" : 1700,
+        "y" : 2414
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "c3-motor-extraccion",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "32"
+      }, {
+        "id" : "38",
+        "vertices" : [ {
+          "x" : 4400,
+          "y" : 2868
+        } ]
+      }, {
+        "id" : "39"
+      }, {
+        "id" : "40"
+      }, {
+        "id" : "56"
+      }, {
+        "id" : "57"
+      }, {
+        "id" : "58"
+      }, {
+        "id" : "59"
+      }, {
+        "id" : "60"
+      }, {
+        "id" : "61"
+      }, {
+        "id" : "62",
+        "vertices" : [ {
+          "x" : 1400,
+          "y" : 1155
+        }, {
+          "x" : 1700,
+          "y" : 2385
+        } ]
+      }, {
+        "id" : "63"
+      }, {
+        "id" : "64",
+        "vertices" : [ {
+          "x" : 1700,
+          "y" : 2989
+        }, {
+          "x" : 2671,
+          "y" : 3776
+        }, {
+          "x" : 3429,
+          "y" : 3776
+        }, {
+          "x" : 4400,
+          "y" : 3468
+        } ]
+      }, {
+        "id" : "65",
+        "vertices" : [ {
+          "x" : 1400,
+          "y" : 1755
+        }, {
+          "x" : 1700,
+          "y" : 2864
+        } ]
+      } ]
+    } ],
+    "configuration" : {
+      "branding" : { },
+      "lastSavedView" : "c3-motor-extraccion",
+      "metadataSymbols" : "SquareBrackets",
+      "styles" : { },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "description" : "Diagrama de contenedores del Sistema de Flags sobre Filings",
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "17",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "18",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "19",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "20",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "21",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "22",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "23",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "24",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "25",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "c2-contenedores",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "26"
+      }, {
+        "id" : "28"
+      }, {
+        "id" : "29"
+      }, {
+        "id" : "30"
+      }, {
+        "id" : "31"
+      }, {
+        "id" : "32"
+      }, {
+        "id" : "33"
+      }, {
+        "id" : "34"
+      }, {
+        "id" : "35"
+      }, {
+        "id" : "36"
+      }, {
+        "id" : "37"
+      }, {
+        "id" : "38"
+      }, {
+        "id" : "39"
+      }, {
+        "id" : "40"
+      }, {
+        "id" : "41"
+      }, {
+        "id" : "42"
+      }, {
+        "id" : "43"
+      }, {
+        "id" : "44"
+      }, {
+        "id" : "45"
+      }, {
+        "id" : "46"
+      }, {
+        "id" : "47"
+      }, {
+        "id" : "48"
+      }, {
+        "id" : "50"
+      }, {
+        "id" : "52"
+      }, {
+        "id" : "54"
+      }, {
+        "id" : "66"
+      } ],
+      "softwareSystemId" : "6"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "description" : "Diagrama de contexto del Sistema de Flags sobre Filings",
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "c1-contexto",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "27"
+      }, {
+        "id" : "49"
+      }, {
+        "id" : "51"
+      }, {
+        "id" : "53"
+      }, {
+        "id" : "55"
+      } ],
+      "softwareSystemId" : "6"
+    } ]
+  }
+}
