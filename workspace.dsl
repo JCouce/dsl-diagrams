@@ -3,7 +3,7 @@ workspace "Sistema de Flags sobre Filings" "Versión inicial C1–C3 (contexto, 
   model {
     
     /********************
-     * PERSONAS / ACTORES
+     * PERSONAS / ACTORES (C1)
      ********************/
     analista = person "Analista HITL" "Revisa y valida flags; aporta feedback para mejorar reglas y glosarios." {
       tags "A"
@@ -18,7 +18,7 @@ workspace "Sistema de Flags sobre Filings" "Versión inicial C1–C3 (contexto, 
     }
 
     /************************
-     * SISTEMAS EXTERNOS (EXT)
+     * SISTEMAS EXTERNOS (EXT) (C1)
      ************************/
     sec = softwareSystem "SEC/EDGAR" "Fuente de filings (8-K, 10-Q, 10-K, 6-K)." {
       tags "Ext"
