@@ -36,6 +36,16 @@ Follow the steps below to enable diagram preview in Visual Studio Code.
      ```
 
 3. **Open and preview**
+
    - Open the `workspace.dsl` file in VS Code
    - A **Preview** action will appear above each defined view
-   - Click the **Preview** link to visualize that view.
+   - Click the **Preview** link to visualize that view
+
+4. **View all diagrams using Structurizr Lite (recommended)**
+   - Ensure Docker Desktop is running
+   - From the project root, run:
+     ```bash
+     docker run -it --rm -p 8080:8080 -v "$PWD":/usr/local/structurizr structurizr/lite
+     ```
+   - Open [http://localhost:8080](http://localhost:8080) to explore all views interactively
+   - Reload the browser after editing the `.dsl` file to see updates
